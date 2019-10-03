@@ -150,6 +150,7 @@ namespace POE_RTS_WinForm
       //no set because it shouldn't change from 1
     }
 
+    public string integer;
     public string Faction
     {
       get
