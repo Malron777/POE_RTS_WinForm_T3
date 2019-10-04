@@ -9,10 +9,12 @@ namespace POE_RTS_WinForm
 {
   public class Map
   {
-    public Map(int aNumberOfUnits, int aNumberOfBuildings)
+    public Map(int aNumberOfUnits, int aNumberOfBuildings, int aGridSize)
     {
       this.numberOfUnits = aNumberOfUnits;
       this.numberOfBuildings = aNumberOfBuildings;
+
+      gridSize = aGridSize;
 
       rand = new Random();
 
@@ -45,9 +47,9 @@ namespace POE_RTS_WinForm
         units.Add(unit);
       }
 
-      for (int i = 0; i < numberOfBuildings; i++)
+      for (int i = 0; i < numberOfBuildings/2; i++)
       {
-        Building building = GenerateRandomBuilding();
+        Building building = GenerateBuilding();
         building.unitNumber = i;
         buildings.Add(building);
       }
@@ -108,38 +110,7 @@ namespace POE_RTS_WinForm
       return unit;
     }
 
-    private Building GenerateRandomBuilding()
-    {
-      int whichBuilding =  rand.Next(0, 2);
-
-      if (whichBuilding == 0)
-      {
-        Point point = GetRandomOpenPosition();
-
-        char lSymbol;
-        string lFaction;
-        int whichFaction = rand.Next(0, 2);
-        if (whichFaction == 0)
-        {
-          lSymbol = 'H';
-          lFaction = "Horde";
-        }
-        else
-        {
-          lSymbol = 'A';
-          lFaction = "Alliance";
-        }
-
-        ResourceBuilding building = new ResourceBuilding(point.xPos, point.yPos, 10, lFaction, 'R', "Coal", 2, 1);
-        return building;
-      }
-      else
-      {
-        return GenerateRandomFactory();
-      }
-    }
-
-    private Building GenerateRandomFactory()
+    private Building GenerateBuilding()
     {
       Point point = GetRandomOpenPosition();
       int xPos = point.xPos;
@@ -159,15 +130,21 @@ namespace POE_RTS_WinForm
         lFaction = "Alliance";
       }
 
+      Point Rpoint = GetRandomOpenPosition();
+      int RxPos = point.xPos;
+      int RyPos = point.yPos;
+
+      ResourceBuilding RB = new ResourceBuilding(RxPos, RyPos, 20, lFaction, 'R', "Coal", 1, rand.Next(1, 4));
+
       Building building;
 
       if (whichUnit == 0)
       { //spawn a ranged Factory 
-        building = new FactoryBuilding<RangedUnit>(xPos, yPos, 20, lFaction, 'F');
+        building = new FactoryBuilding<RangedUnit>(xPos, yPos, 20, lFaction, 'F', RB);
       }
       else
       { //spawn a melee Factory
-        building = new FactoryBuilding<MeleeUnit>(xPos, yPos, 20, lFaction, 'F');
+        building = new FactoryBuilding<MeleeUnit>(xPos, yPos, 20, lFaction, 'F', RB);
       }
 
       return building;
@@ -181,6 +158,36 @@ namespace POE_RTS_WinForm
         IUnit lUnit = units[index] as IUnit;
         if (lUnit.Health <= 0)
         {
+          //increases the resources for the opposing team if a unit was killed
+          if (units[index] is RangedUnit)
+          {
+            foreach (Building building in buildings)
+            {
+              if (building is ResourceBuilding)
+              {
+                ResourceBuilding b = building as ResourceBuilding;
+                if (b.Faction != lUnit.Faction)
+                {
+                  b.GenerateResources();
+                }
+              }
+            }
+          }
+          else if (units[index] is MeleeUnit)
+          {
+            foreach (Building building in buildings)
+            {
+              if (building is ResourceBuilding)
+              {
+                ResourceBuilding b = building as ResourceBuilding;
+                if (b.Faction != lUnit.Faction)
+                {
+                  b.GenerateResources();
+                }
+              }
+            }
+          }
+
           units.Remove(units[index]);
         }
         else

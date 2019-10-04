@@ -11,9 +11,11 @@ namespace POE_RTS_WinForm
   public class FactoryBuilding<T> : Building, IUnit
     where T : Unit, new()
   {
-    public FactoryBuilding(int aXPos, int aYPos, int aHealth, string aFaction, char aSymbol)
+    public FactoryBuilding(int aXPos, int aYPos, int aHealth, string aFaction, char aSymbol, ResourceBuilding aRB)
               : base(aXPos, aYPos, aHealth, aFaction, aSymbol)
     {
+      this.resourceBuilding = aRB;
+
       base.xPosition = aXPos;
       base.yPosition = aYPos;
 
@@ -30,7 +32,6 @@ namespace POE_RTS_WinForm
         SpawnPoint = aYPos - 1;
       }
     }
-
     public FactoryBuilding(int aXPos, int aYPos, int aHealth, string aFaction, char aSymbol, int aMaxHealth)
 : base(aXPos, aYPos, aHealth, aFaction, aSymbol, aMaxHealth)
     {
@@ -95,6 +96,8 @@ namespace POE_RTS_WinForm
         }
       }
     }
+
+    public ResourceBuilding resourceBuilding;
 
     public int Health
     {

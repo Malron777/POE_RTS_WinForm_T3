@@ -18,17 +18,19 @@ namespace POE_RTS_WinForm
     }
     public GameEngine GE;
 
-    private int numberOfUnits = 12;
-    private int numberOfBuildings = 4;
+
     //private float waitTime = 1;
     //private float timeElapsed = 0;
     //private bool isPaused = true;
 
     private void btnStart_Click(object sender, EventArgs e)
     {
+      int gridSize = Convert.ToInt32(nudGridSize.Value);
+      int unitNumber = (gridSize ^ 2) / 4;
+
       if (GE == null)
       {
-        GE = new GameEngine(numberOfUnits, numberOfBuildings);
+        GE = new GameEngine(unitNumber, gridSize);
         GE.StartGame();
       }
 

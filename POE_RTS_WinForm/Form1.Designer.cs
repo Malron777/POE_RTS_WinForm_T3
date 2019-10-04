@@ -37,6 +37,9 @@
       this.timer1 = new System.Windows.Forms.Timer(this.components);
       this.btnSave = new System.Windows.Forms.Button();
       this.btnLoad = new System.Windows.Forms.Button();
+      this.nudGridSize = new System.Windows.Forms.NumericUpDown();
+      this.lblGridSize = new System.Windows.Forms.Label();
+      ((System.ComponentModel.ISupportInitialize)(this.nudGridSize)).BeginInit();
       this.SuspendLayout();
       // 
       // rtbMap
@@ -118,11 +121,35 @@
       this.btnLoad.UseVisualStyleBackColor = true;
       this.btnLoad.Click += new System.EventHandler(this.btnLoad_Click);
       // 
+      // nudGridSize
+      // 
+      this.nudGridSize.Location = new System.Drawing.Point(472, 26);
+      this.nudGridSize.Name = "nudGridSize";
+      this.nudGridSize.Size = new System.Drawing.Size(74, 22);
+      this.nudGridSize.TabIndex = 4;
+      this.nudGridSize.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+      this.nudGridSize.Value = new decimal(new int[] {
+            20,
+            0,
+            0,
+            0});
+      // 
+      // lblGridSize
+      // 
+      this.lblGridSize.AutoSize = true;
+      this.lblGridSize.Location = new System.Drawing.Point(407, 28);
+      this.lblGridSize.Name = "lblGridSize";
+      this.lblGridSize.Size = new System.Drawing.Size(64, 17);
+      this.lblGridSize.TabIndex = 5;
+      this.lblGridSize.Text = "Grid size";
+      // 
       // Form1
       // 
       this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
       this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
       this.ClientSize = new System.Drawing.Size(943, 490);
+      this.Controls.Add(this.lblGridSize);
+      this.Controls.Add(this.nudGridSize);
       this.Controls.Add(this.btnLoad);
       this.Controls.Add(this.btnSave);
       this.Controls.Add(this.btnPause);
@@ -133,6 +160,7 @@
       this.MinimumSize = new System.Drawing.Size(837, 484);
       this.Name = "Form1";
       this.Text = "Form1";
+      ((System.ComponentModel.ISupportInitialize)(this.nudGridSize)).EndInit();
       this.ResumeLayout(false);
       this.PerformLayout();
 
@@ -148,6 +176,8 @@
     private System.Windows.Forms.Timer timer1;
     private System.Windows.Forms.Button btnSave;
     private System.Windows.Forms.Button btnLoad;
+    private System.Windows.Forms.NumericUpDown nudGridSize;
+    private System.Windows.Forms.Label lblGridSize;
   }
 }
 

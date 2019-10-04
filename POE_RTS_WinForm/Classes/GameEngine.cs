@@ -9,9 +9,9 @@ namespace POE_RTS_WinForm
 {
   public class GameEngine
   {
-    public GameEngine(int aNumberOfUnits, int aNumberOfBuildings)
+    public GameEngine(int aNumberOfUnits, int aGridsize)
     {
-      map = new Map(aNumberOfUnits, aNumberOfBuildings);
+      map = new Map(aNumberOfUnits, aNumberOfUnits, aGridsize);
       rand = new Random();
     }
 
@@ -68,8 +68,9 @@ namespace POE_RTS_WinForm
         //  map.units.Add(RU);
         //}
         //else
-        if (roundsCompleted % building.ProductionSpeed == 0)
+        if (building.resourceBuilding.ResourcePoolRemaining >= 5)
         {
+          building.resourceBuilding.ResourcePoolRemaining -= 5;
           string unitNumber = (map.numberOfUnits + map.numberOfBuildings).ToString();
           RangedUnit RU = building.BuildNewUnit($"Archer{unitNumber}", building.xPos, building.SpawnPoint, 10) as RangedUnit;
           map.units.Add(RU);
@@ -78,15 +79,9 @@ namespace POE_RTS_WinForm
       if (map.buildings[index] is FactoryBuilding<MeleeUnit>)
       {
         FactoryBuilding<MeleeUnit> building = map.buildings[index] as FactoryBuilding<MeleeUnit>;
-        //if (roundsCompleted == 0)
-        //{
-        //  string unitNumber = (map.numberOfUnits + map.numberOfBuildings).ToString();
-        //  MeleeUnit MU = building.BuildNewUnit($"Tank{unitNumber}", building.xPos, building.SpawnPoint, 10) as MeleeUnit;
-        //  map.units.Add(MU);
-        //}
-        //else 
-        if (roundsCompleted % building.ProductionSpeed == 0)
+        if (building.resourceBuilding.ResourcePoolRemaining >= 5)
         {
+          building.resourceBuilding.ResourcePoolRemaining -= 5;
           string unitNumber = (map.numberOfUnits + map.numberOfBuildings).ToString();
           MeleeUnit MU = building.BuildNewUnit($"Tank{unitNumber}", building.xPos, building.SpawnPoint, 10) as MeleeUnit;
           map.units.Add(MU);
