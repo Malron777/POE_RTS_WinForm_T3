@@ -152,15 +152,16 @@ namespace POE_RTS_WinForm
     private string resourceType;
     private int resourcesGenerated;
     private int resourcesGeneratedPerRound;
+    private int _ResourcePoolRemaining;
     public int ResourcePoolRemaining
     {
-      get { return ResourcePoolRemaining; }
+      get { return _ResourcePoolRemaining; }
       set
       {
-        ResourcePoolRemaining += value;
-        if (ResourcePoolRemaining >= 100)
+        _ResourcePoolRemaining += value;
+        if (_ResourcePoolRemaining >= 100)
         {
-          ResourcePoolRemaining = 100;
+          _ResourcePoolRemaining = 100;
         }
       }
     }

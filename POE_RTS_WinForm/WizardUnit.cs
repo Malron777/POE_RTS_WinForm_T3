@@ -8,6 +8,23 @@ namespace POE_RTS_WinForm
 {
   class WizardUnit : Unit, IUnit
   {
+    public WizardUnit(string aName, int aPositionX, int aPositionY, int aHealth, int aSpeed, int aAttack, string aFaction, char aSymbol)
+
+  : base(aName, aPositionX, aPositionY, aHealth, aSpeed, aAttack, aFaction, aSymbol)
+    {
+      this.attackRange = 1;
+
+      this.xPosition = aPositionX;
+      this.yPosition = aPositionY;
+      this.health = aHealth;
+      this.maxHealth = aHealth;
+      this.speed = aSpeed;
+      this.attack = aAttack;
+      this.faction = aFaction;
+      this.symbol = aSymbol;
+      this.name = aName;
+    }
+
     public int xPos
     {
       get

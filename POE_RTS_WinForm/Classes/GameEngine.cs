@@ -53,7 +53,6 @@ namespace POE_RTS_WinForm
       }
       
       //Update displays
-      map.PopulateMap();
       map.UpdateDisplay();
 
       roundsCompleted++;

@@ -56,7 +56,10 @@ namespace POE_RTS_WinForm
 
       for (int i = 0; i < numberOfUnits/2; i++)
       {
-        WizardUnit wizard = new WizardUnit();
+        Point point = GetRandomOpenPosition();
+        int xPos = point.xPos;
+        int yPos = point.yPos;
+        WizardUnit wizard = new WizardUnit("Wizard", xPos, yPos, 10, rand.Next(1,4), 4, "Neutral", 'W');
         units.Add(wizard);
       }
     }
@@ -193,6 +196,20 @@ namespace POE_RTS_WinForm
               }
             }
           }
+          else if (units[index] is MeleeUnit)
+          {
+            foreach (Building building in buildings)
+            {
+              if (building is ResourceBuilding)
+              {
+                ResourceBuilding b = building as ResourceBuilding;
+                if (b.Faction != lUnit.Faction)
+                {
+                  b.GenerateResources();
+                }
+              }
+            }
+          }
 
           units.Remove(units[index]);
         }
@@ -255,6 +272,8 @@ namespace POE_RTS_WinForm
 
     public string PrintMap()
     {
+      UpdateDisplay();
+
       string text = "";
 
       for (int i = 0; i < gridSize; i++)
