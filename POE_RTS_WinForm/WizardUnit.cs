@@ -6,30 +6,8 @@ using System.Threading.Tasks;
 
 namespace POE_RTS_WinForm
 {
-  [Serializable]
-  public class MeleeUnit : Unit, IPosition, IUnit
+  class WizardUnit : Unit, IUnit
   {
-    public MeleeUnit()
-    {
-
-    }
-
-    public MeleeUnit(string aName, int aPositionX, int aPositionY, int aHealth, int aSpeed, int aAttack, string aFaction, char aSymbol) 
-
-      : base(aName, aPositionX, aPositionY, aHealth, aSpeed, aAttack, aFaction, aSymbol)
-    {
-      this.attackRange = 1;
-
-      this.xPosition = aPositionX;
-      this.yPosition = aPositionY;
-      this.health = aHealth;
-      this.maxHealth = aHealth;
-      this.speed = aSpeed;
-      this.attack = aAttack;
-      this.faction = aFaction;
-      this.symbol = aSymbol;
-      this.name = aName;
-    }
     public int xPos
     {
       get
@@ -44,7 +22,7 @@ namespace POE_RTS_WinForm
         }
         else if (value >= Map.gridSize)
         {
-          base.xPosition = Map.gridSize-1;
+          base.xPosition = Map.gridSize - 1;
         }
         else
         {
@@ -66,7 +44,7 @@ namespace POE_RTS_WinForm
         }
         else if (value >= Map.gridSize)
         {
-          base.yPosition = Map.gridSize-1;
+          base.yPosition = Map.gridSize - 1;
         }
         else
         {
@@ -147,29 +125,32 @@ namespace POE_RTS_WinForm
       {
         return base.attackRange;
       }
-      //no set because it shouldn't change from 1
+      set
+      {
+
+      }
     }
 
     public string Faction
     {
       get
       {
-        return base.faction;
+        return "Neutral";
       }
       set
       {
-        base.faction = value;
+        base.faction = "Neutral";
       }
     }
     public char Symbol
     {
       get
       {
-        return base.symbol;
+        return 'W';
       }
       set
       {
-        base.symbol = value;
+        base.symbol = 'W';
       }
     }
 
@@ -210,7 +191,7 @@ namespace POE_RTS_WinForm
       isAttacking = true;
       aTarget.Health -= this.Attack;
     }
-    
+
     public override bool RangeCheck(IUnit aTarget)
     {
       if (aTarget is IPosition)
@@ -267,9 +248,9 @@ namespace POE_RTS_WinForm
         }
         for (int i = minRange; i < maxRange; i++)
         {
-          if (aFieldToCheck[i, maxRange-1] != null)
+          if (aFieldToCheck[i, maxRange - 1] != null)
           {
-            return aFieldToCheck[i, maxRange-1];
+            return aFieldToCheck[i, maxRange - 1];
           }
         }
 
@@ -288,9 +269,9 @@ namespace POE_RTS_WinForm
         //Check column
         for (int i = minRange; i < maxRange; i++)
         {
-          if (aFieldToCheck[i, maxRange-1] != null)
+          if (aFieldToCheck[i, maxRange - 1] != null)
           {
-            return aFieldToCheck[i, maxRange-1];
+            return aFieldToCheck[i, maxRange - 1];
           }
         }
         for (int i = minRange; i < maxRange; i++)
@@ -337,7 +318,7 @@ namespace POE_RTS_WinForm
 
     public override void SaveToFile()
     {
-      var lClassSerialisation = new ClassSerialisation<MeleeUnit>();
+      var lClassSerialisation = new ClassSerialisation<WizardUnit>();
 
       lClassSerialisation.SaveClass(FileName, this);
     }
