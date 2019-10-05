@@ -29,6 +29,7 @@ namespace POE_RTS_WinForm
 
     public void StartNewRound()
     {
+      //Perform unit actions
       for (int i = 0; i < map.units.Count; i++)
       {
         if (map.units[i] is Unit)
@@ -37,6 +38,7 @@ namespace POE_RTS_WinForm
         }
       }
 
+      ///Perform building actions
       for (int i = 0; i < map.buildings.Count; i++)
       {
         if (map.buildings[i] is ResourceBuilding)
@@ -49,7 +51,8 @@ namespace POE_RTS_WinForm
           CheckBuildingProduction(i);
         }
       }
-
+      
+      //Update displays
       map.PopulateMap();
       map.UpdateDisplay();
 
@@ -154,6 +157,59 @@ namespace POE_RTS_WinForm
           if (lUnit.RangeCheck(closestEnemy))
           {
             lUnit.EngageUnit(closestEnemy);
+            lUnit.IsAttacking = true;
+          }
+          else if (roundsCompleted % lUnit.Speed == 0)
+          {
+            if (closestEnemy is IPosition)
+            { //Move toward the enemy
+              var lTarget = closestEnemy as IPosition;
+              int differenceInXPosition = Math.Abs(lUnit.xPos - lTarget.xPos);
+              int differenceInYPosition = Math.Abs(lUnit.yPos - lTarget.yPos);
+              if (differenceInXPosition > differenceInYPosition)
+              { //Move vertical
+                if (lUnit.yPos <= lTarget.yPos)
+                {
+                  lUnit.Move(Unit.Direction.Up);
+                }
+                else if (lUnit.yPos > lTarget.yPos)
+                {
+                  lUnit.Move(Unit.Direction.Down);
+                }
+              }
+              else if (differenceInXPosition > differenceInYPosition)
+              { //Move horizontal
+                if (lUnit.xPos <= lTarget.xPos)
+                {
+                  lUnit.Move(Unit.Direction.Right);
+                }
+                else if (lUnit.xPos > lTarget.xPos)
+                {
+                  lUnit.Move(Unit.Direction.Left);
+                }
+              }
+              else
+              {
+                lUnit.Move(Unit.Direction.Up);
+              }
+            }
+          }
+        }
+        else if (lUnit.Health < 0.25 * lUnit.MaxHealth)
+        {
+          lUnit.Move(RandomDirection());
+        }
+      }
+      if (aUnit is WizardUnit)
+      {
+        WizardUnit lUnit = aUnit as WizardUnit;
+        IUnit closestEnemy = lUnit.FindClosestEnemy(map.Battlefield);
+
+        if (closestEnemy != null && lUnit.Health >= 0.5 * lUnit.MaxHealth)
+        {
+          if (lUnit.RangeCheck(closestEnemy))
+          {
+            lUnit.AOEDamage(map.units);
             lUnit.IsAttacking = true;
           }
           else if (roundsCompleted % lUnit.Speed == 0)

@@ -123,11 +123,11 @@ namespace POE_RTS_WinForm
     {
       get
       {
-        return base.attackRange;
+        return 1;
       }
       set
       {
-
+        base.attackRange = 1;
       }
     }
 
@@ -284,6 +284,33 @@ namespace POE_RTS_WinForm
       }
 
       return null;
+    }
+
+    public void AOEDamage(List<Unit> units)
+    {
+      int minX = this.xPos - 1; 
+      int minY = this.yPos - 1; 
+                                
+      int maxX = this.xPos + 1; 
+      int maxY = this.yPos + 1; 
+
+      for (int i = minY; i < maxY; i++)
+      {
+        for (int j = minX; j < maxX; j++)
+        {
+          foreach (Unit unit in units)
+          {
+            if (unit is IUnit && !(unit is WizardUnit))
+            {
+              IUnit lUnit = unit as IUnit;
+              if (lUnit.xPos == j && lUnit.yPos == i)
+              {
+                EngageUnit(lUnit);
+              }
+            }
+          }
+        }
+      }
     }
 
     public override void KillUnit()

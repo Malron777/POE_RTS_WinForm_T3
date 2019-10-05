@@ -53,6 +53,12 @@ namespace POE_RTS_WinForm
         building.unitNumber = i;
         buildings.Add(building);
       }
+
+      for (int i = 0; i < numberOfUnits/2; i++)
+      {
+        WizardUnit wizard = new WizardUnit();
+        units.Add(wizard);
+      }
     }
 
     public Point GetRandomOpenPosition()
