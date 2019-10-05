@@ -153,7 +153,6 @@ namespace POE_RTS_WinForm
         base.symbol = 'W';
       }
     }
-
     public bool IsAttacking
     {
       get { return base.isAttacking; }
