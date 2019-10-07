@@ -9,22 +9,24 @@ namespace POE_RTS_WinForm
 {
   public class Map
   {
-    public Map(int aNumberOfUnits, int aNumberOfBuildings, int aGridSize)
+    public Map(int aNumberOfUnits, int aNumberOfBuildings, int aGridSizeX, int aGridSizeY)
     {
       this.numberOfUnits = aNumberOfUnits;
       this.numberOfBuildings = aNumberOfBuildings;
 
-      gridSize = aGridSize;
+      gridSizeX = aGridSizeX;
+      gridSizeY = aGridSizeY;
 
       rand = new Random();
 
-      map = new char[gridSize, gridSize];
+      map = new char[gridSizeX, gridSizeY];
       units = new List<Unit>();
       buildings = new List<Building>();
     }
 
     private char blankSpaceCharacter = 'o';
-    public static int gridSize = 20;
+    public static int gridSizeX = 20;
+    public static int gridSizeY = 20;
 
     public int numberOfUnits;
     public int numberOfBuildings;
@@ -39,7 +41,7 @@ namespace POE_RTS_WinForm
 
     public void GenerateBattleField()
     {
-      Battlefield = new IUnit[gridSize, gridSize];
+      Battlefield = new IUnit[gridSizeX, gridSizeY];
 
       for (int i = 0; i < numberOfUnits; i++)
       {
@@ -71,8 +73,8 @@ namespace POE_RTS_WinForm
       bool posFound = false;
       do
       {
-        point.xPos = rand.Next(0, gridSize);
-        point.yPos = rand.Next(0, gridSize);
+        point.xPos = rand.Next(0, gridSizeX);
+        point.yPos = rand.Next(0, gridSizeY);
         if (Battlefield[point.xPos, point.yPos] == null)
         {
           posFound = true;
@@ -231,9 +233,9 @@ namespace POE_RTS_WinForm
 
     public void UpdateDisplay()
     {
-      for (int i = 0; i < gridSize; i++)
+      for (int i = 0; i < gridSizeX; i++)
       {
-        for (int j = 0; j < gridSize; j++)
+        for (int j = 0; j < gridSizeY; j++)
         {
           map[i, j] = blankSpaceCharacter;
         }
@@ -276,9 +278,9 @@ namespace POE_RTS_WinForm
 
       string text = "";
 
-      for (int i = 0; i < gridSize; i++)
+      for (int i = 0; i < gridSizeX; i++)
       {
-        for (int j = 0; j < gridSize; j++)
+        for (int j = 0; j < gridSizeY; j++)
         {
           text += map[i, j].ToString() + " ";
         }

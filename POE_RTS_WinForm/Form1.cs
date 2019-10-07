@@ -25,14 +25,19 @@ namespace POE_RTS_WinForm
 
     private void btnStart_Click(object sender, EventArgs e)
     {
-      int gridSize = Convert.ToInt32(nudGridSize.Value);
-      int unitNumber = (gridSize ^ 2) / 4;
+      int gridSizeX = Convert.ToInt32(nudGridSizeX.Value);
+      int gridSizeY = Convert.ToInt32(nudGridSizeY.Value);
+      int unitNumber = (gridSizeX * gridSizeY) / 4;
 
       if (GE == null)
       {
-        GE = new GameEngine(unitNumber, gridSize);
+        GE = new GameEngine(unitNumber, gridSizeX, gridSizeY);
         GE.StartGame();
       }
+
+      nudGridSizeX.Enabled = false;
+      btnLoad.Enabled = false;
+      btnSave.Enabled = false;
 
       timer1.Enabled = true;
     }
@@ -65,6 +70,8 @@ namespace POE_RTS_WinForm
     private void btnPause_Click(object sender, EventArgs e)
     {
       timer1.Enabled = false;
+      btnLoad.Enabled = true;
+      btnSave.Enabled = true;
     }
 
     private void btnSave_Click(object sender, EventArgs e)

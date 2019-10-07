@@ -37,9 +37,9 @@ namespace POE_RTS_WinForm
         {
           base.xPosition = 0;
         }
-        else if (value >= Map.gridSize)
+        else if (value >= Map.gridSizeX)
         {
-          base.xPosition = Map.gridSize - 1;
+          base.xPosition = Map.gridSizeX - 1;
         }
         else
         {
@@ -59,9 +59,9 @@ namespace POE_RTS_WinForm
         {
           base.yPosition = 0;
         }
-        else if (value >= Map.gridSize)
+        else if (value >= Map.gridSizeY)
         {
-          base.yPosition = Map.gridSize - 1;
+          base.yPosition = Map.gridSizeY - 1;
         }
         else
         {
@@ -249,9 +249,9 @@ namespace POE_RTS_WinForm
         {
           minRange = 0;
         }
-        if (maxRange > Map.gridSize)
+        if (maxRange > Map.gridSizeX)
         {
-          maxRange = Map.gridSize;
+          maxRange = Map.gridSizeX;
         }
 
         //Check row
@@ -277,9 +277,9 @@ namespace POE_RTS_WinForm
         {
           minRange = 0;
         }
-        if (maxRange > Map.gridSize)
+        if (maxRange > Map.gridSizeY)
         {
-          maxRange = Map.gridSize;
+          maxRange = Map.gridSizeY;
         }
 
         //Check column

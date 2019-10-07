@@ -9,9 +9,9 @@ namespace POE_RTS_WinForm
 {
   public class GameEngine
   {
-    public GameEngine(int aNumberOfUnits, int aGridsize)
+    public GameEngine(int aNumberOfUnits, int aGridsizeX, int aGridSizeY)
     {
-      map = new Map(aNumberOfUnits, aNumberOfUnits, aGridsize);
+      map = new Map(aNumberOfUnits, aNumberOfUnits, aGridsizeX, aGridSizeY);
       rand = new Random();
     }
 
